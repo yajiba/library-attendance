@@ -12,10 +12,8 @@ export default function Students({ students, filters }) {
         perPage: filters.perPage || 10,
     });
    
-    const handleSearch = (e) => {
-        setData('search', e.target.value);
-        get(route('student.list'), { preserveState: true, replace: true });
-    };
+    const [loading, setLoading] = React.useState(false);
+
 
     const handleSort = (field) => {
         const direction = data.sortField === field && data.sortDirection === 'asc' ? 'desc' : 'asc';
@@ -27,13 +25,52 @@ export default function Students({ students, filters }) {
         get(route('student.list'), { preserveState: true, replace: true });
     };
 
+    const handleSearch = (e) => {
+        const searchValue = e.target.value;
+        setData('search', searchValue);
+        // Preserve the current state and replace the route with updated query params
+        get(route('student.list'), { 
+            preserveState: true, 
+            replace: true,
+            onSuccess: () => {
+                const url = new URL(window.location);
+                url.searchParams.set('search', searchValue);
+                history.pushState({}, '', url);
+            }
+        });
+    };
+    
     const handlePerPageChange = (e) => {
-        setData((prevData) => ({
-          ...prevData,
-          perPage: parseInt(e.target.value),
-        }));
-        get(route('student.list'), { preserveState: true, replace: true });
-      };
+        const newPerPageValue = e.target.value;
+        setData('perPage', newPerPageValue);
+    
+        const url = new URL(window.location);
+        url.searchParams.set('perPage', newPerPageValue);
+        
+        // Preserving other query parameters
+        // Here you can keep any other parameters you may have
+    
+        window.location.href = url.toString(); // Redirect to the new URL
+    };
+    
+/*     const handlePerPageChange = (e) => {
+        const newPerPageValue = e.target.value;
+        setData('perPage', newPerPageValue);
+    
+        // Preserve the current state and replace the route with updated query params
+        get(route('student.list'), { 
+            preserveState: true, 
+            replace: true,
+            onSuccess: () => {
+                const url = new URL(window.location);
+                url.searchParams.set('perPage', newPerPageValue); // Update perPage in the URL
+                
+                // Use history.pushState to update the URL without reloading
+                history.pushState({}, '', url);
+            }
+        });
+    }; */
+    
     
 
     return (
@@ -68,7 +105,7 @@ export default function Students({ students, filters }) {
 
                             {/* Students Table */}
                             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                <thead className='  text-gray-700 text-left uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+                                <thead className='  text-gray-700 text-left uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 cursor-pointer'>
                                     <tr>
                                         <th scope="col" className="py-3">ID</th>
                                         <th scope="col" className="py-3" onClick={() => handleSort('first_name')}> <div className="flex items-center">

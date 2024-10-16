@@ -27,15 +27,16 @@ class StudentController extends Controller
             ->paginate($perPage)
             ->withQueryString();
 
-        return Inertia::render('Student/List', [
-            'students' => $students,
-            'filters' => [
-                'search' => $search,
-                'sortField' => $sortField,
-                'sortDirection' => $sortDirection,
-                'perPage' => $perPage,
-            ],
-        ]);
+            return Inertia::render('Student/List', [
+                'students' => $students,
+                'filters' => [
+                    'search' => $search,
+                    'sortField' => $sortField,
+                    'sortDirection' => $sortDirection,
+                    'perPage' => $perPage,
+                ],
+                'loading' => false, // This can be dynamic based on your logic
+            ]);
     }
 }
 

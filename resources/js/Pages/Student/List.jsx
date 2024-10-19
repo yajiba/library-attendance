@@ -78,8 +78,6 @@ export default function Students({ students, filters }) {
             header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Students</h2>}
         >
             <Head title="Students" />
-            <div className="py-6">
-                <div className="mx-auto max-w-7xl sm:px-4 lg:px-6">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-4 relative overflow-x-auto shadow-md sm:rounded-lg">
                             {/* Search and Per Page Controls */}
@@ -88,13 +86,13 @@ export default function Students({ students, filters }) {
                                     type="text"
                                     value={data.search}
                                     onChange={handleSearch}
-                                    className="border px-2 py-1 rounded"
+                                    className="border border-borderColor px-2 py-1 rounded"
                                     placeholder="Search students..."
                                 />
                                 <select
                                     value={data.perPage}
                                     onChange={handlePerPageChange}
-                                    className="border px-2 py-1 rounded"
+                                    className="border px-2 py-1 rounded border-borderColor"
                                     style={{width:"80px"}}
                                 >
                                     <option value="5">5</option>
@@ -104,8 +102,8 @@ export default function Students({ students, filters }) {
                             </div>
 
                             {/* Students Table */}
-                            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                                <thead className='  text-gray-700 text-left uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 cursor-pointer'>
+                            <table className="w-full text-sm text-left text-darkGray dark:lightGray">
+                                <thead className='  text-darkGray text-left uppercase bg-gray-50 dark:bg-lightGray dark:lightGray cursor-pointer'>
                                     <tr>
                                         <th scope="col" className="py-3">ID</th>
                                         <th scope="col" className="py-3" onClick={() => handleSort('first_name')}> <div className="flex items-center">
@@ -170,7 +168,7 @@ export default function Students({ students, filters }) {
                                             <td className="px-1 py-2 text-left">{item.department.name}</td>
                                             <td className="px-1 py-2 text-left">{item.mobile_number}</td>
                                             <td className="px-1 py-2 text-left">{item.gender}</td>
-                                            <td className="px-1 py-2 text-left">{(item.status == 1) ? 'Active' : "Inactive"}</td>
+                                            <td className="px-1 py-2 text-left ">{(item.status == 1) ? 'Active' : "Inactive"}</td>
                                             <td className="px-1 py-2 text-left flex">
                                                 <Link href={`/students/edit/${item.id}`} className="text-blue-500"> <svg className="w-4 h-4 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
@@ -190,8 +188,8 @@ export default function Students({ students, filters }) {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+               
+            
         </AuthenticatedLayout>
     );
 }
